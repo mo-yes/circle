@@ -1,0 +1,49 @@
+@import "tailwindcss";
+@plugin './hero.js';
+
+/* Note: You may need to change the path to fit your project structure */
+@source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+@custom-variant dark (&:is(.dark *));
+
+button{
+  cursor: pointer;
+}
+
+/* 🎨 Navbar */
+.nav-link {
+  @apply text-gray-700 dark:text-gray-200 
+         hover:text-blue-600 dark:hover:text-blue-400 
+         transition-colors font-medium 
+         px-3 py-2 rounded-lg 
+         hover:bg-gray-100 dark:hover:bg-gray-800;
+}
+
+/* ✨(Active Link) */
+.nav-link-active {
+  @apply text-blue-600 dark:text-blue-400
+         font-semibold
+         bg-blue-50 dark:bg-blue-950
+         rounded-lg px-3 py-2
+         transition-all duration-200;
+}
+
+
+/* 🌙 */
+.nav-link-mobile {
+  @apply block w-full text-center text-lg font-medium 
+         text-gray-700 dark:text-gray-200 
+         hover:text-blue-600 dark:hover:text-blue-400 
+         transition-colors py-4 rounded-lg 
+         hover:bg-gray-50 dark:hover:bg-gray-800;
+}
+
+
+/* ReactionButton animate */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
