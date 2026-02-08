@@ -1,12 +1,17 @@
 import { MessageCircle, Share2 } from "lucide-react";
 import { useState } from "react";
 import Reactions from "../Reaction/Reactions";
+import { useNavigate } from "react-router-dom";
 
 {/* 🔹 Post Actions */}
-export default function Action() {
+export default function Action({ post }) {
     const [currentReaction, setCurrentReaction] = useState(null);
       // const [_, setLikesCount] = useState( );
 
+      const navigate = useNavigate();
+         function goToDetails() {
+  navigate(`/post/${post._id}`);
+}
 
   {/* Reaction Function */}
   function handleReaction(reaction) {
@@ -34,7 +39,7 @@ export default function Action() {
       
               {/* Comment Button */}
               <button className="flex items-center space-x-2 hover:bg-gray-100 dark:hover:bg-gray-700 flex-1 justify-center py-2 rounded-md transition-colors duration-200">
-                <MessageCircle className="w-5 h-5" />
+                <MessageCircle onClick={goToDetails} className="w-5 h-5 cursor-pointer" />
               </button>
       
               {/* Share Button*/}

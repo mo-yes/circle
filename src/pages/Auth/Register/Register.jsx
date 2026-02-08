@@ -25,25 +25,32 @@ export default function Register() {
     mode:'onBlur',
   });
   async function handleRegister(formDeta) {
+
+    try {
     setErrMsg('')
     setSuccMsg('')
     setIsLoading(true)
-    const data = await registerApi(formDeta)
-    // console.log("🚀 ~ handleRegister ~ data:", data)
-    if(data.message == 'success'){
+      const data = await registerApi(formDeta);
+      console.log("🚀 ~ handleRegister ~ data:", data)
+      if (data.message === "success") {
       setSuccMsg(data.message)
       setErrMsg('')
       reset()
       setTimeout(() => {
       navigate('/login');
     }, 1000);
-    }
-    else{
+      } else {
       setSuccMsg('')
       setErrMsg(data)
       toast.error(data)
+      }
+    } catch (error) {
+      setErrMsg(error.message);
     }
-    setIsLoading(false)
+    finally{
+      setIsLoading(false);
+    }
+
 }
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-400 via-fuchsia-500 to-sky-900 p-4 sm:p-6">
@@ -89,6 +96,7 @@ export default function Register() {
 
             {/*Register Button*/}
             <Button
+            isDisabled={isLoading}
             isLoading={isLoading}
               type="submit"
               color="primary"

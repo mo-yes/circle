@@ -5,9 +5,11 @@ import Header from "../Post/Header/Header";
 import Image from "../Post/Image/Image";
 import States from "../Post/States/States";
 
-export default function PostCard({ post , fetchPosts , silentRefreshRef }) {
+export default function PostCard({ post , fetchPosts , silentRefreshRef ,updateCommentHandler }) {
+
+
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm dark:shadow-gray-700 overflow-hidden my-6 transition-all duration-300 hover:shadow-md dark:hover:shadow-gray-600">
+    <div  className="bg-white dark:bg-gray-800 rounded-lg shadow-sm dark:shadow-gray-700 overflow-hidden my-6 transition-all duration-300 hover:shadow-md dark:hover:shadow-gray-600 ">
       {/* 🔹 Post Header */}
       <Header post={post} fetchPosts={fetchPosts} />
 
@@ -15,16 +17,20 @@ export default function PostCard({ post , fetchPosts , silentRefreshRef }) {
       {post.body && <Body post={post} />}
 
       {/* 🔹 Post Image */}
-      {post.image && <Image post={post} />}
+      {post.image && (
+        <div >
+          <Image post={post} />
+        </div>
+      )}
 
       {/* 🔹 Post Stats */}
       <States post={post} />
 
       {/* 🔹 Post Actions */}
-      <Action />
+      <Action post={post} />
 
       {/* 🔹 Comments Section */}
-      <Footer post={post} fetchPosts={fetchPosts} silentRefreshRef={silentRefreshRef} />
+      <Footer post={post} fetchPosts={fetchPosts} silentRefreshRef={silentRefreshRef} updateCommentHandler={updateCommentHandler} />
     </div>
   );
 }

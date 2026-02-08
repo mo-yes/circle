@@ -1,17 +1,16 @@
-{/* 🔹 Post Image */}
-export default function Image({post}) {
+export default function Image({ post }) {
   return (
     <>
-      {/* 🔹 Post Image */}
       {post.image && (
-        <div className="w-full">
+        <div className="w-full max-h-[420px] overflow-hidden">
           <img
             src={post.image}
             alt="Post"
-            className="w-full object-cover max-h-96 "
+            className="
+              w-full h-full object-cover"
           />
         </div>
       )}
     </>
-  )
+  );
 }

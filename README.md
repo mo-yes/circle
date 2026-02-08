@@ -1,4 +1,4 @@
-# 🔗 Linked Social App
+# 🔗 Circle Social App
 
 A simple social media application built with **React + Vite + Tailwind CSS**, featuring authentication (Register / Login), validation, and toast notifications.  
 The project is structured for scalability, with contexts for authentication and posts, and modular components for reusability.

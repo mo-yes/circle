@@ -33,25 +33,30 @@ export default function Login() {
   async function handleLogin(formData) {
     setErrMsg("");
     setIsLoading(true);
-      const data = await loginApi(formData);
-      setIsLoading(false);
+  try {
+    const data = await loginApi(formData);
 
-      if (data.message == 'success') {
-        localStorage.setItem('token', data.token);
+    if (data?.message === "success") {
+      if (data.token) localStorage.setItem("token", data.token);
+        // localStorage.setItem('token', data.token);
         setIsLoggedIn(true);
         toast.success("Login successful!");
         navigate('/')
-      }
+
       const redirectPath = location.state?.from?.pathname || "/";
-      if(redirectPath ){
-        navigate(redirectPath);
-      }
-        else{
+      navigate(redirectPath);
+    } else {
+      // const msg = typeof data === "string" ? data : data?.message || "Login failed";
         setErrMsg(data)
         toast.error(data);
-      }
+    }
+  } catch {
+    setErrMsg("Network error");
+    toast.error("Network error");
+  } finally {
+    setIsLoading(false);
   }
-    
+}
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-400 via-fuchsia-500 to-sky-900 p-4 sm:p-6">

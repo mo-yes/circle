@@ -30,7 +30,7 @@ import ProtectedMain from "../ProtectedRoutes/Main/ProtectedMain";
     {index:true , element:<ProtectedMain> <Home /> </ProtectedMain>},
     {path:'profile', element:<ProtectedMain> <Profile /> </ProtectedMain>},
     {path:'settings', element:<ProtectedMain> <Settings /> </ProtectedMain>},
-    {path:'post-details', element:<ProtectedMain> <PostDetails /> </ProtectedMain>},
+    { path: "post/:id", element: <ProtectedMain><PostDetails /></ProtectedMain> },
     {path:'*' , element:<NoteFound />},
   ]}
  ]);

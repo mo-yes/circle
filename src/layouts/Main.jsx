@@ -6,7 +6,7 @@ export default function Main() {
   return (
     <>
       <Navbar />
-      <main className="mt-4 ">
+      <main className="shadow">
         <Outlet />
       </main>
       <Footer />

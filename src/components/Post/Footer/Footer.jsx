@@ -6,7 +6,7 @@ import CommentItem from "./CommentItem";
 import toast from "react-hot-toast";
 import { getUserPhoto } from "../../../utils/userUtils";
 
-export default function Footer({ post, fetchPosts, silentRefreshRef }) {
+export default function Footer({ post, fetchPosts, silentRefreshRef ,updateCommentHandler  }) {
   const [isCommentDeleting, setIsCommentDeleting] = useState(false);
   const [commentContent, setCommentContent] = useState("");
   const [isCommentSubmitting, setIsCommentSubmitting] = useState(false);
@@ -22,9 +22,11 @@ export default function Footer({ post, fetchPosts, silentRefreshRef }) {
 
     try {
       setIsCommentSubmitting(true);
-      await addCommentApi(commentContent, post.id);
+      await addCommentApi(commentContent, post._id);
       setCommentContent("");
-      silentRefreshRef.current = true;
+      if (silentRefreshRef?.current !== undefined) {
+          silentRefreshRef.current = true;
+      }
       await fetchPosts();
       toast.success("Comment added successfully");
     } finally {
@@ -56,12 +58,13 @@ export default function Footer({ post, fetchPosts, silentRefreshRef }) {
         <div className="px-4 py-3 space-y-3">
           {firstComment && (
             <CommentItem
-            fetchPosts={fetchPosts}
-            silentRefreshRef={silentRefreshRef}
-              handleDeleteComment={handleDeleteComment}
-              comment={firstComment}
-              isCommentDeleting={isCommentDeleting}
-            />
+  comment={firstComment}
+  handleDeleteComment={handleDeleteComment}
+  isCommentDeleting={isCommentDeleting}
+  updateCommentHandler={updateCommentHandler}  // 👈 مهم
+  postId={post._id}                            // 👈 مهم
+/>
+
           )}
 
           {remainingComments.length > 0 && (
@@ -79,13 +82,14 @@ export default function Footer({ post, fetchPosts, silentRefreshRef }) {
                   <div className="space-y-3 max-h-60 overflow-y-auto p-1">
                     {remainingComments.map((c) => (
                       <CommentItem
-                        fetchPosts={fetchPosts}
-                        silentRefreshRef={silentRefreshRef}
-                        key={c._id || c.createdAt}
-                        comment={c}
-                        handleDeleteComment={handleDeleteComment}
-                        isCommentDeleting={isCommentDeleting}
-                      />
+  key={c._id || c.createdAt}
+  comment={c}
+  handleDeleteComment={handleDeleteComment}
+  isCommentDeleting={isCommentDeleting}
+  updateCommentHandler={updateCommentHandler}  // 👈 مهم
+  postId={post._id}                            // 👈 مهم
+/>
+
                     ))}
                   </div>
                   <div className="flex justify-center mt-2">

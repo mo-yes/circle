@@ -6,15 +6,14 @@ import { getUserPhoto } from "../../../utils/userUtils";
 import CardDropdown from "../../Dropdown/CardDropdown";
 import CardModal from "../../Dropdown/Modal/CardModal";
 import { Button, Input } from "@heroui/react";
-import { updateCommentApi } from "../../../services/CommentServices";
 import toast from "react-hot-toast";
 
 export default function CommentItem({
   comment,
   handleDeleteComment,
   isCommentDeleting,
-  fetchPosts,
-  silentRefreshRef,
+  updateCommentHandler,   // 👈 الجديد
+  postId
 }) {
   const { userData } = useContext(AuthContext);
 
@@ -27,19 +26,25 @@ export default function CommentItem({
   const photo = getUserPhoto(comment.commentCreator);
 
   async function handleUpdateComment() {
-    if (editContent.trim().length < 2) return;
+  if (editContent.trim().length < 2) return;
 
-    try {
-      setIsUpdating(true);
-      await updateCommentApi(comment._id, editContent);
-      toast.success("Comment updated");
-      setIsEditing(false);
-      silentRefreshRef.current = true;
-      await fetchPosts();
-    } finally {
-      setIsUpdating(false);
-    }
+  try {
+    setIsUpdating(true);
+
+    await updateCommentHandler(
+      comment._id,
+      editContent,
+      postId
+    );
+
+    toast.success("Comment updated");
+    setIsEditing(false);
+
+  } finally {
+    setIsUpdating(false);
   }
+}
+
 
   return (
     <div className="flex space-x-3">
